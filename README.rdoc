@@ -1,0 +1,27 @@
+
+= solaris-prototype
+
+Author:: Martin Carpenter
+Email:: mcarpenter@free.fr
+Copyright:: Copyright (c) Martin Carpenter 2011
+
+== About
+
+The solaris-prototype gem helps with the manipulation of SunOS and Solaris
+prototype entries for SysV packages.
+
+== Examples
+
+=== Prepare a prototype for installation as another user
+
+    p = Solaris::Prototype.from_path './usr/local/bin/foo'
+    p.to_s
+      => "f none ./usr/local/bin/foo 0755 martin staff"
+    p.owner = 'root'
+    p.group = 'sys'
+    p.to_s
+      => "f none ./usr/local/bin/foo 0755 root sys"
+    p.pathname = "/usr/local/bin/foo=./usr/local/bin/foo"
+      => "f none /usr/local/bin/foo=./usr/local/bin/foo 0755 root sys"
+  
+This can then be fed into pkgmk(1M).
